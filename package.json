@@ -1,0 +1,8 @@
+{
+  "name": "wellness-radar",
+  "version": "1.0.0",
+  "description": "Indian D2C Wellness Trend Radar — Mosaic Fellowship 2026",
+  "engines": {
+    "node": "18.x"
+  }
+}
