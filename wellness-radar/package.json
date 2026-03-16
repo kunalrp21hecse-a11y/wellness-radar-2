@@ -3,6 +3,6 @@
     "version": "1.0.0",
     "description": "Indian D2C Wellness Trend Radar",
     "engines": {
-      "node": "18.x"
+      "node": "24.x"
     }
   }
