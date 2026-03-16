@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Wellness Trend Radar — Mosaic Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&family=Syne:wght@600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #0a0c0a; --bg2: #0f120f; --bg3: #141814; --bg4: #1a1f1a;
+  --border: rgba(255,255,255,0.06); --border2: rgba(255,255,255,0.1);
+  --text: #e8ede8; --text2: #a8b5a8; --text3: #6b7a6b;
+  --sage: #7fb069; --sage-soft: rgba(127,176,105,0.1); --sage-border: rgba(127,176,105,0.25);
+  --amber: #d4a853; --amber-soft: rgba(212,168,83,0.1); --amber-border: rgba(212,168,83,0.25);
+  --red: #c0392b; --red-soft: rgba(192,57,43,0.08); --red-border: rgba(192,57,43,0.2);
+  --blue: #5b8db8; --blue-soft: rgba(91,141,184,0.1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:1320px;margin:0 auto;padding:0 32px}
+
+/* HEADER & HERO */
+nav{padding:20px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.nav-brand{display:flex;align-items:center;gap:12px;}
+.nav-logo{width:32px;height:32px;background:var(--sage);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:#0a0c0a;}
+.nav-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--text);}
+.nav-tag{font-size:11px;color:var(--text3);text-transform:uppercase;}
+.live-badge{display:flex;align-items:center;gap:6px;background:var(--sage-soft);border:1px solid var(--sage-border);border-radius:999px;padding:5px 12px;font-size:11px;color:var(--sage);text-transform:uppercase;}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--sage);animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+
+.hero{padding:72px 0 56px;border-bottom:1px solid var(--border);}
+.hero-eyebrow{font-size:12px;color:var(--text3);text-transform:uppercase;margin-bottom:20px;font-weight:500;}
+.hero h1{font-family:'Instrument Serif',serif;font-size:clamp(42px,5vw,72px);font-weight:400;line-height:1.05;color:var(--text);margin-bottom:8px;}
+.hero h1 em{font-style:italic;color:var(--sage);}
+.hero-sub{font-size:16px;color:var(--text2);font-weight:300;max-width:560px;line-height:1.7;margin-bottom:40px;}
+
+/* CONTROLS */
+.controls{padding:32px 0;border-bottom:1px solid var(--border);display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;}
+.search-wrap{flex:1;min-width:280px;}
+.search-label{font-size:11px;text-transform:uppercase;color:var(--text3);margin-bottom:8px;}
+.search-input{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:12px 16px;color:var(--text);font-size:14px;outline:none;}
+.search-input:focus{border-color:var(--sage)}
+.btn-primary{background:var(--sage);border:none;border-radius:10px;padding:12px 28px;color:#0a0c0a;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;}
+.btn-primary:disabled{opacity:0.4;cursor:not-allowed;}
+.btn-secondary-sm{background:transparent;border:1px solid var(--border2);border-radius:10px;padding:12px 20px;color:var(--text2);cursor:pointer;}
+
+/* STATUS */
+#statusWrap{padding:16px 0;display:none;align-items:center;gap:12px;border-bottom:1px solid var(--border);}
+.spinner{width:16px;height:16px;border:1.5px solid var(--border2);border-top-color:var(--sage);border-radius:50%;animation:spin 0.7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+#statusText{font-size:13px;color:var(--text2)}
+
+/* GRID & CARDS */
+#gridSection{padding:40px 0}
+.grid-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:28px;}
+.grid-title{font-family:'Instrument Serif',serif;font-size:20px;color:var(--text);}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:20px;}
+
+.trend-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;overflow:hidden;animation:fadeUp 0.5s ease both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.card-accent{height:3px;width:100%}
+.card-body{padding:22px 24px}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;}
+.card-name{font-family:'Instrument Serif',serif;font-size:20px;color:var(--text);}
+.card-desc{font-size:11px;color:var(--text3);margin-top:3px;}
+.verdict-pill{font-size:9px;font-weight:700;text-transform:uppercase;padding:5px 10px;border-radius:999px;}
+.v-real{background:var(--sage-soft);color:var(--sage);border:1px solid var(--sage-border)}
+.v-emerging{background:var(--amber-soft);color:var(--amber);border:1px solid var(--amber-border)}
+.v-fad{background:var(--red-soft);color:var(--red);border:1px solid var(--red-border)}
+.v-loading{background:var(--blue-soft);color:var(--blue);border:1px solid rgba(91,141,184,0.25)}
+
+.score-row{display:flex;align-items:baseline;gap:6px;}
+.score-big{font-family:'Syne',sans-serif;font-size:36px;font-weight:800;line-height:1;}
+.score-max{font-size:14px;color:var(--text3)}
+.score-label{font-size:11px;color:var(--text3);margin-bottom:14px}
+.bar-track{height:3px;background:var(--bg4);border-radius:999px;margin-bottom:18px;}
+.bar-fill{height:100%;border-radius:999px;transition:width 1.2s ease}
+
+.metrics-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:14px;background:var(--bg3);border-radius:10px;margin-bottom:16px;}
+.metric-item{display:flex;flex-direction:column;}
+.metric-label{font-size:9px;text-transform:uppercase;color:var(--text3)}
+.metric-val{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--text)}
+
+.analysis{font-size:12px;color:var(--text2);line-height:1.7;margin-bottom:14px;}
+.opp-box{background:var(--bg3);border-left:2px solid var(--sage);border-radius:0 8px 8px 0;padding:12px 14px;margin-bottom:14px;}
+.opp-label{font-size:9px;text-transform:uppercase;color:var(--sage);font-weight:600;margin-bottom:6px;}
+.opp-text{font-size:12px;color:var(--text2);line-height:1.6;}
+
+.data-row{display:flex;align-items:center;gap:16px;padding-top:12px;border-top:1px solid var(--border);font-size:10px;color:var(--text3);}
+
+.shimmer{background:linear-gradient(90deg,var(--bg3) 25%,var(--bg4) 50%,var(--bg3) 75%);background-size:200% 100%;animation:shimmer 1.8s infinite;border-radius:6px;}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+.empty{grid-column:1/-1;text-align:center;padding:100px 20px;}
+.empty-glyph{font-family:'Instrument Serif',serif;font-size:80px;color:var(--border2);line-height:1;}
+.empty h2{font-family:'Instrument Serif',serif;font-size:24px;color:var(--text2);margin-bottom:8px;}
+.empty p{font-size:14px;color:var(--text3);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav>
+    <div class="nav-brand"><div class="nav-logo">W</div><div><div class="nav-name">Wellness Radar</div><div class="nav-tag">Mosaic Intelligence</div></div></div>
+    <div class="live-badge"><span class="live-dot"></span>Live Data</div>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-eyebrow">Category Intelligence</div>
+    <h1>What's the <em>next big</em><br>wellness trend?</h1>
+    <p class="hero-sub">A predictive radar that separates real market shifts from fads using live Reddit signals, Google Trends velocity, and AI pattern matching.</p>
+  </div>
+
+  <div class="controls">
+    <div class="search-wrap">
+      <div class="search-label">Custom trend (optional)</div>
+      <input class="search-input" id="customTrend" type="text" placeholder="e.g. colostrum, berberine..."/>
+    </div>
+    <button class="btn-primary" id="runBtn" onclick="runRadar()">Run Radar →</button>
+  </div>
+
+  <div id="statusWrap">
+    <div class="spinner"></div>
+    <span id="statusText">Initialising…</span>
+  </div>
+
+  <div id="gridSection">
+    <div class="grid-header"><div class="grid-title">Trend Analysis</div></div>
+    <div class="grid" id="grid">
+      <div class="empty">
+        <div class="empty-glyph">◍</div>
+        <h2>Radar is ready</h2>
+        <p>Click "Run Radar" to fetch live signals and analyse.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const BASE_TRENDS = [
+  {id:'protein_supp', name:'Protein Supplements', desc:'Everyday protein beyond gym culture'},
+  {id:'ashwagandha', name:'Ashwagandha', desc:'Ancient adaptogen meeting modern science'},
+  {id:'gut_health', name:'Gut Health & Probiotics', desc:'Microbiome as foundation of wellness'},
+  {id:'mushrooms', name:'Functional Mushrooms', desc:'Lion\'s mane, reishi, chaga nootropics'}
+];
+
+let isRunning = false;
+
+function setStatus(text, show=true){
+  const w = document.getElementById('statusWrap');
+  w.style.display = show ? 'flex' : 'none';
+  document.getElementById('statusText').textContent = text;
+}
+
+function cardLoading(t, i){
+  return `<div class="trend-card" id="card-${t.id}">
+    <div class="card-accent shimmer"></div>
+    <div class="card-body">
+      <div class="card-top">
+        <div><div class="card-name">${t.name}</div><div class="card-desc">${t.desc}</div></div>
+        <span class="verdict-pill v-loading">Scanning…</span>
+      </div>
+      <div class="shimmer" style="height:36px;width:100px;margin-bottom:14px"></div>
+      <div class="shimmer" style="height:70px;width:100%;margin-bottom:16px;border-radius:10px"></div>
+    </div>
+  </div>`;
+}
+
+function cardDone(t, r){
+  const g = r.g;
+  let vCls = 'v-fad', color = '#c0392b';
+  if(g.score >= 68) { vCls = 'v-real'; color = '#7fb069'; }
+  else if(g.score >= 42) { vCls = 'v-emerging'; color = '#d4a853'; }
+
+  return `<div class="trend-card" id="card-${t.id}">
+    <div class="card-accent" style="background:${color}"></div>
+    <div class="card-body">
+      <div class="card-top">
+        <div><div class="card-name">${t.name}</div><div class="card-desc">${t.desc}</div></div>
+        <span class="verdict-pill ${vCls}">${g.verdict || 'ANALYZED'}</span>
+      </div>
+      <div class="score-row">
+        <span class="score-big" style="color:${color}">${g.score || 0}</span>
+        <span class="score-max">/100</span>
+      </div>
+      <div class="score-label">Opportunity Score</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${g.score || 0}%;background:${color}"></div></div>
+      <div class="metrics-grid">
+        <div class="metric-item"><span class="metric-label">Maturity</span><span class="metric-val">${g.market_maturity||'-'}/10</span></div>
+        <div class="metric-item"><span class="metric-label">Repeat Buy</span><span class="metric-val">${g.repeat_purchase||'-'}/10</span></div>
+      </div>
+      <p class="analysis">${g.fad_vs_trend_reasoning || ''}</p>
+      <div class="opp-box"><div class="opp-label">D2C Opportunity</div><div class="opp-text">${g.opportunity_brief || ''}</div></div>
+      <div class="data-row">
+        <span>Reddit: ${r.reddit.count} posts</span>
+        <span>Trends: ${r.googleScore}/100</span>
+        <span>YT: ${r.ytScore} vids</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+async function analyzeTrend(trend){
+  const res = await fetch('/api/analyze', {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({trend})
+  });
+  if(!res.ok) {
+    const err = await res.json();
+    throw new Error(err.error || 'Server error');
+  }
+  return await res.json();
+}
+
+async function runRadar(){
+  if(isRunning) return;
+  isRunning = true;
+
+  const customVal = document.getElementById('customTrend').value.trim();
+  const trends = [...BASE_TRENDS];
+  if(customVal) trends.unshift({ id: 'custom_'+Date.now(), name: customVal, desc: 'User custom trend' });
+
+  const btn = document.getElementById('runBtn');
+  btn.disabled = true;
+  btn.textContent = 'Running…';
+
+  const grid = document.getElementById('grid');
+  grid.innerHTML = trends.map((t,i) => cardLoading(t,i)).join('');
+  setStatus(`Initiating radar sequence...`);
+
+  for(let i=0; i<trends.length; i++){
+    const t = trends[i];
+    setStatus(`Fetching live signals & AI analysis for: ${t.name} (${i+1}/${trends.length})`);
+    
+    try {
+      const result = await analyzeTrend(t);
+      const el = document.getElementById('card-'+t.id);
+      if(el) el.outerHTML = cardDone(t, result);
+    } catch(e) {
+      console.error(e);
+      const el = document.getElementById('card-'+t.id);
+      if(el) el.innerHTML = `<div class="card-body"><div class="card-name">${t.name}</div><p style="color:#c0392b;margin-top:10px;">Failed: ${e.message}</p></div>`;
+    }
+  }
+
+  setStatus('', false);
+  btn.disabled = false;
+  btn.textContent = '↺ Re-run Radar';
+  isRunning = false;
+}
+</script>
+</body>
+</html>
